@@ -38,9 +38,9 @@
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #fff"></div><br>
                     {% endif %}
-                    <div class="row">               
-                        <div class="col-md-9"> 
-                            Bill No: {{ item.billno }} <br> 
+                    <div class="row">
+                        <div class="col-md-9">
+                            Bill No: {{ item.billno }} <br>
                             Purchased by {{ item.name }} <br>
                             <small>{{ item.time.date }}</small>
                         </div>
@@ -49,19 +49,23 @@
                 {% endfor %}
             </div>
 
+
             <div class="col-md-6">
-                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Purchases</div><br>
-                {% for item in purchases %}
+                <div style="color:#ea2088; font-style: bold; font-size: 1.3em; border-bottom: 2px solid #fff">Stock About to Expire</div><br>
+                {% for item in near_expiry_products %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #fff"></div><br>
                     {% endif %}
-                    <div class="row">               
-                        <div class="col-md-9"> 
-                            Bill No: {{ item.billno }} <br> 
-                            Purchased by {{ item.supplier.name }} <br>
-                            <small>{{ item.time.date }}</small>
+                    <div class="row">
+                        <div class="col-md-9">
+                            Product: {{ item.name }} <br>
+                            Quantity: {{ item.quantity }} <br>
+                            Expiry Date: {{ item.expiry_date }} <br>
                         </div>
-                        <div class="col-md-2"> {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-bill' item.billno %}">View Bill</a> </div>
+                        <div class="col-md-2">
+                            Price: {{ item.price }} <br>
+                            <br> <a href="{% url 'about_to_expire' %}">View Details</a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
@@ -70,7 +74,7 @@
     </div>
 
     <!-- Loading Chart JS -->
-    <script src="{% static 'js/Chart.min.js' %}"></script>  
+    <script src="{% static 'js/Chart.min.js' %}"></script>
     <script>
         Chart.defaults.global.defaultFontColor = '#fff';
 

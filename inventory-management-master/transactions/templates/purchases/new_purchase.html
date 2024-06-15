@@ -8,13 +8,13 @@
 {% block content %}
 
     <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">New Purchase</div>
-    
+
         <br>
 
         <div class="panel panel-default">
             <div class="panel-heading panel-heading-text">Supplier Details</div>
             <div class="panel-body">
-                    
+
                 <div class="form-group">
                     <label for="id_name" class="panel-body-text">Supplier Name:</label>
                     <input type="text" class="form-control textinput" id="id_name" value="{{ supplier.name }}" disabled>
@@ -37,13 +37,13 @@
         <br>
 
         <form method="post" class="panel panel-default">
-            
+
             {% csrf_token %}
             {{ formset.management_form }}
 
             <div class="panel-heading panel-heading-text">Product Details</div>
-            
-                <div id="stockitem"> 
+
+                <div id="stockitem">
                     <div class="panel-body">
                     {% for form in formset %}
                         <div class="row form-row clone-row">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     {% endfor %}
-                        <div style="text-align: right;">                    
+                        <div style="text-align: right;">
                             <a href="#" class="add-form-row">+ Add More</a>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                 <a href="{% url 'select-supplier' %}" class="btn ghost-button">Go Back</a>
                 <a href="{% url 'purchases-list' %}" class="btn ghost-button">Cancel</a>
             </div>
-            
+
         </form>
 
     </div>
@@ -94,7 +94,7 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dialogbox.js' %}"></script>
     <script type="text/javascript">
-        
+
         //creates custom alert object
         var custom_alert = new custom_alert();
 
@@ -103,7 +103,7 @@
             // I.E. inspection_report_form-0, ... -1, ... -2 if you delete -1 then two forms are left and reorder:
             // inspection_report_form-0, and then inspection_report_form-2 becomes -1
             var id_regex = new RegExp('(' + prefix + '-\\d+)');
-            var replacement = prefix + '-' + ndx;   
+            var replacement = prefix + '-' + ndx;
             if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
             if (el.id) el.id = el.id.replace(id_regex, replacement);
             if (el.name) el.name = el.name.replace(id_regex, replacement);
@@ -132,7 +132,7 @@
             $(selector).after(newElement);
             return false;
         }
-        
+
         function deleteForm(prefix, btn) {
             var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
             if (total > 1){
@@ -150,13 +150,13 @@
             }
             return false;
         };
-                
+
         $(document).on('click', '.add-form-row', function(e){
             e.preventDefault();
             cloneMore('.clone-row:last', 'form');
             return false;
         });
-        
+
         $(document).on('click', '.remove-form-row', function(e){
             e.preventDefault();
             deleteForm('form', $(this));
@@ -164,7 +164,7 @@
         });
 
 
-        //updates the total price by multiplying 'price per item' and 'quantity' 
+        //updates the total price by multiplying 'price per item' and 'quantity'
         $(document).on('change', '.setprice', function(e){
             e.preventDefault();
             //gets the values

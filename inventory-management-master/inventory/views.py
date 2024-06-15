@@ -14,6 +14,7 @@ from .filters import StockFilter
 from django.utils import timezone
 from datetime import timedelta
 import csv
+from django.urls import reverse_lazy
 
 
 #def about_to_expire(request):
@@ -57,7 +58,7 @@ class StockCreateView(SuccessMessageMixin, CreateView):                         
     model = Stock                                                                       # setting 'Stock' model as model
     form_class = StockForm                                                              # setting 'StockForm' form as form
     template_name = "edit_stock.html"                                                   # 'edit_stock.html' used as the template
-    success_url = '/inventory'                                                          # redirects to 'inventory' page in the url after submitting the form
+    success_url = reverse_lazy('/inventory')                                                          # redirects to 'inventory' page in the url after submitting the form
     success_message = "Stock has been created successfully"                             # displays message when form is submitted
 
     def get_context_data(self, **kwargs):                                               # used to send additional context
@@ -71,7 +72,7 @@ class StockUpdateView(SuccessMessageMixin, UpdateView):                         
     model = Stock                                                                       # setting 'Stock' model as model
     form_class = StockForm                                                              # setting 'StockForm' form as form
     template_name = "edit_stock.html"                                                   # 'edit_stock.html' used as the template
-    success_url = '/inventory'                                                          # redirects to 'inventory' page in the url after submitting the form
+    success_url = reverse_lazy('/inventory')                                                          # redirects to 'inventory' page in the url after submitting the form
     success_message = "Stock has been updated successfully"                             # displays message when form is submitted
 
     def get_context_data(self, **kwargs):                                               # used to send additional context

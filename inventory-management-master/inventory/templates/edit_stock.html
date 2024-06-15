@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
+{% load custom_filters %}  <!-- Load custom filters -->
 
 {% block title %} {{title}} {% endblock title %}
 
-
 {% block content %}
 
-    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div> 
-    
+    <div style="color:#ea2088; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">{{title}}</div>
+
     <br>
-    
+
     <form method="post">
-    
+
         {% csrf_token %}
         {{ form.non_field_errors }}
-        
+
         <div class="form-group">
             {{ form.name.errors }}
             <label for="{{ form.name.id_for_label }}">Name:</label>
@@ -26,10 +26,21 @@
             {{ form.quantity }}
         </div>
         <div class="form-group">
+            {{ form.price.errors }}
+            <label for="{{ form.price.id_for_label }}">Price:</label>
+            {{ form.price }}
+        </div>
+        <div class="form-group">
             {{ form.expiry_date.errors }}
             <label for="{{ form.expiry_date.id_for_label }}">Expiry Date:</label>
             {{ form.expiry_date }}
         </div>
+
+        <!-- Display the calculated price
+        <div class="form-group">
+            <label>Total Price:</label>
+            <p>{{ form.quantity.value|multiply:form.price.value }}</p>
+        </div>-->
 
         <br>
 
@@ -43,7 +54,7 @@
             {% endif %}
             <a href="{% url 'inventory' %}" class="btn ghost-button">Cancel</a>
         </div>
-        
+
     </form>
 
 {% endblock content %}

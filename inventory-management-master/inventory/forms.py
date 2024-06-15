@@ -7,7 +7,8 @@ class StockForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({'class': 'textinput form-control'})
         self.fields['quantity'].widget.attrs.update({'class': 'textinput form-control', 'min': '0'})
         self.fields['expiry_date'].widget.attrs.update({'class': 'textinput form-control', 'type': 'date'})
+        self.fields['price'].widget.attrs.update({'class': 'textinput form-control', 'min': '0'})
 
     class Meta:
         model = Stock
-        fields = ['name', 'quantity', 'expiry_date']
+        fields = ['name', 'quantity', 'expiry_date', 'price']

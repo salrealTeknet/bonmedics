@@ -1,7 +1,7 @@
 #python cache files
 **/__pycache__/**
 
-#migrations, you can auto generate them using makemigrations and migrate commands
+#migratio, you can auto generate them using makemigrations and migrate commands
 **/migrations/**
 
 

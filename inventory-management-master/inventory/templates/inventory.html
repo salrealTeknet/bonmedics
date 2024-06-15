@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
 {% load widget_tweaks %}
+{% load custom_filters %}  <!-- Load custom filters -->
 
 {% block title %} Inventory List {% endblock title %}
 
@@ -33,9 +33,11 @@
 
         <thead class="thead-inverse align-middle">
             <tr>
-                <th width="40%">Stock Name</th>
+                <th width="25%">Stock Name</th>
                 <th width="15%">Current Stock</th>
-                <th width="25%">Expiry Date</th>
+                <th width="20%">Expiry Date</th>
+                <th width="20%">Price</th>
+                <th width="20%">Total Price</th>
                 <th width="20%">Options</th>
             </tr>
         </thead>
@@ -49,6 +51,8 @@
                         </td>
                         <td class="align-middle">{{ stock.quantity }}</td>
                         <td class="align-middle">{{ stock.expiry_date }}</td>
+                        <td class="align-middle">{{ stock.price }}</td>
+                        <td class="align-middle">{{ stock.quantity|multiply:stock.price }}</td>  <!-- Calculate total price -->
                         <td class="align-middle">
                             <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Edit Details</a>
                             <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red">Delete Stock</a>
@@ -59,7 +63,7 @@
         {% else %}
             <tbody>
                 <tr>
-                    <td colspan="4" style="text-align: center;">WOW, SUCH EMPTY</td>
+                    <td colspan="6" style="text-align: center;">WOW, SUCH EMPTY</td>
                 </tr>
             </tbody>
         {% endif %}
