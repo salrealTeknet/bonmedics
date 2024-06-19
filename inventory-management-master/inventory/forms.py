@@ -12,3 +12,6 @@ class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
         fields = ['name', 'quantity', 'expiry_date', 'price']
+        widgets = {
+            'expiry_date': forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}),
+        }

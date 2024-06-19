@@ -54,39 +54,40 @@
 
         <br>
 
-        <div class="panel panel-default">
-
-            {{ formset.management_form }}
-
-            <div class="panel-heading panel-heading-text">Product Details</div>
-
-                <div id="stockitem">
-                    <div class="panel-body">
-                    {% for iform in formset %}
-                        <div class="row form-row clone-row">
-                            <div class="form-group col-md-6">
-                                {{ iform.stock.errors }}
-                                <label class="panel-body-text">Stock:</label>
-                                {{ iform.stock }}
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="panel-body-text">Price per item:</label>
-                                {{ iform.perprice }}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{ iform.quantity.errors }}
-                                <label class="panel-body-text">Quantity:</label>
-                                {{ iform.quantity }}
-                            </div>
-                            <div class="form-group col-md-1">
-                                <label class="panel-body-text">Price:</label>
-                                <input type="text" class="textinput form-control totalprice" value="1" disabled required>
-                            </div>
-                            <div class="form-group col-md-1">
-                                <label class="panel-body-text" style="color: #000">.</label>
-                                <button class="form-control btn btn-danger remove-form-row">-</button>
-                            </div>
-                        </div>
+       <div class="panel panel-default">
+    {{ formset.management_form }}
+    <div class="panel-heading panel-heading-text">Product Details</div>
+    <div id="stockitem">
+        <div class="panel-body">
+        {% for iform in formset %}
+            <div class="row form-row clone-row">
+                <div class="form-group col-md-6">
+                    {{ iform.stock.errors }}
+                    <label class="panel-body-text">Stock:</label>
+                    <select name="{{ iform.stock.name }}" class="form-control stock-select" data-perprice="{{ iform.perprice }}">
+                        {% for stock in stocks %}
+                            <option value="{{ stock.pk }}" data-price="{{ stock.price }}">{{ stock.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="panel-body-text">Price per item:</label>
+                    <input type="text" class="form-control perprice" value="" disabled>
+                </div>
+                <div class="form-group col-md-2">
+                    {{ iform.quantity.errors }}
+                    <label class="panel-body-text">Quantity:</label>
+                    {{ iform.quantity }}
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="panel-body-text">Price:</label>
+                    <input type="text" class="textinput form-control totalprice" value="1" disabled required>
+                </div>
+                <div class="form-group col-md-1">
+                    <label class="panel-body-text" style="color: #000">.</label>
+                    <button class="form-control btn btn-danger remove-form-row">-</button>
+                </div>
+            </div>
                     {% endfor %}
                         <div style="text-align: right;">
                             <a href="#" class="add-form-row">+ Add More</a>
@@ -229,5 +230,34 @@
         });
 
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.stock-select').forEach(function(selectElement) {
+        selectElement.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var price = selectedOption.getAttribute('data-price');
+            var perpriceInput = this.closest('.form-row').querySelector('.perprice');
+            var totalpriceInput = this.closest('.form-row').querySelector('.totalprice');
+
+            if (price) {
+                perpriceInput.value = price;
+                var quantity = this.closest('.form-row').querySelector('[name$="-quantity"]').value;
+                totalpriceInput.value = (quantity * price).toFixed(2);
+            }
+        });
+    });
+
+    // Update total price when quantity changes
+    document.querySelectorAll('[name$="-quantity"]').forEach(function(quantityInput) {
+        quantityInput.addEventListener('input', function() {
+            var formRow = this.closest('.form-row');
+            var price = formRow.querySelector('.perprice').value;
+            var totalpriceInput = formRow.querySelector('.totalprice');
+            totalpriceInput.value = (this.value * price).toFixed(2);
+        });
+    });
+});
+</script>
+
 
 {% endblock content %}
