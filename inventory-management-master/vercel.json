@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "inventory-management-master/wsgi.py",
+      "src": "bonmedics/wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -24,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "inventory-management-master/wsgi.py"
+      "dest": "bonmedics/wsgi.py"
     }
   ]
 }
