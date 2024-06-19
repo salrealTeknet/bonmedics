@@ -3,7 +3,7 @@
 
     "builds": [{
 
-        "src": "bonmedics/wsgi.py",
+        "src": "inventory-management-master/wsgi.py",
 
         "use": "@vercel/python",
 
@@ -17,7 +17,7 @@
 
             "src": "/(.*)",
 
-            "dest": "bonmedics/wsgi.py"
+            "dest": "inventory-management-master/wsgi.py"
 
         }
 
