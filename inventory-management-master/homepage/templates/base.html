@@ -4,25 +4,22 @@
 <html lang="en">
 
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
 
     <!-- Main CSS, then Sidebar CSS and Dialog Box CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dialogbox.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dialogbox.css' %}">
 
     <title>BONMEDICS - {% block title %}Title Missing{% endblock title %}</title>
-
 </head>
 
 <body>
-
     <!-- Dialog Box CSS  -->
     <div id="dialogoverlay"></div>
     <div id="dialogbox">
@@ -33,12 +30,16 @@
         </div>
     </div>
 
+    <!-- Sidebar Toggle Button -->
+    <button class="menu-toggle" id="sidebarToggle">
+        ☰
+    </button>
+
     <main id="wrapper">
-    
+
     {% if user.is_authenticated %}
-    
+
         <nav id="sidebar">
-            
             <div class="sidebar-header">
                 <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h3>BONMEDICS</h3></a>
             </div>
@@ -47,7 +48,7 @@
                 {# <p class="sidebar-paragraph">Dummy Heading</p> #}
                 <li>
                     <a class="sidebar-text sidebar-button" href="{% url 'home' %}">Home</a>
-                </li>               
+                </li>
                 <li>
                     <a href="#inventorySubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Inventory</a>
                     <ul class="collapse list-unstyled" id="inventorySubmenu">
@@ -90,51 +91,53 @@
                             <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}">Logout</a> </li>
                     </ul>
                 </li>
-
             </ul>
             {% comment %}
             <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="#" class="sidebar-button nav-button" >Button</a>
+                    <a href="#" class="sidebar-button nav-button">Button</a>
                 </li>
                 <li>
                     <a href="#" class="sidebar-text">Link</a>
                 </li>
             </ul>
             {% endcomment %}
-
         </nav>
-    
-        <div id="content">
 
+        <div id="content">
             <div class="row">
                 <div class="col-md-12">
-                
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}"> {{ message }} </div>
                         {% endfor %}
                     {% endif %}
-                
-    {% endif %} 
-
-                    <div class="container">
-                        {% block content %}{% endblock content %}
-                    </div>
-                    
                 </div>
             </div>
-            <br>
 
+            <div class="container">
+                {% block content %}{% endblock content %}
+            </div>
+            <br>
         </div>
-    
-    </main>    
-        
+    {% endif %}
+    </main>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
     <script src="{% static 'bootstrap/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
 
-</body>
+    <!-- Custom JS to toggle sidebar -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var sidebarToggle = document.getElementById('sidebarToggle');
+            var sidebar = document.getElementById('sidebar');
 
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
 </html>
